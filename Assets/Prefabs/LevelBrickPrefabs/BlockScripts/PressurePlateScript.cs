@@ -47,11 +47,11 @@ public class PressurePlateScript : MonoBehaviour
             {
                 if ((shooter.position.x - shotSpawn.position.x) < 0)
                 {
-                    dartRotation = 0;
+                    dartRotation = 180;
                 }
                 else
                 {
-                    dartRotation = 180;
+                    dartRotation = 0;
                 }
             }
             
@@ -60,11 +60,11 @@ public class PressurePlateScript : MonoBehaviour
             {
                 if ((shooter.position.y - shotSpawn.position.y) < 0)
                 {
-                    dartRotation = 270;
+                    dartRotation = 90;
                 }
                 else
                 {
-                    dartRotation = 90;
+                    dartRotation = 270;
                 }
             }
             // sets degree rotation to quaternion
