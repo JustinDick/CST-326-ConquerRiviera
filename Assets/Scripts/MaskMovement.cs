@@ -46,6 +46,10 @@ public class MaskMovement : MonoBehaviour
 
     public Transform fireballSpawner;
     private bool leavestate;
+    
+    public MoverScript MoverScriptCall;
+    private bool playerRay;
+    public Vector3 playerPostion;
     void Start()
     { 
         sphereRadius = 5;
@@ -53,6 +57,9 @@ public class MaskMovement : MonoBehaviour
         countDown = 5f;
         maxHealth = 100f;
         health = maxHealth;
+        
+        // find the player script
+        MoverScriptCall = GameObject.Find("player").GetComponent<MoverScript>();
     }
 
     // Update is called once per frame
@@ -87,6 +94,28 @@ public class MaskMovement : MonoBehaviour
         else
         {
             countDown = 5f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            int weaponCount = MoverScriptCall.weaponNum();
+
+            if (weaponCount == 0)
+            {
+                playerPostion = MoverScriptCall.playerPosition();
+                playerPostion -= transform.position;
+                playerRay = Physics.Raycast(transform.position, playerPostion, 5);
+
+                if (playerRay == true)
+                {
+                    takeDamage(10);
+                }
+            }
+        }
+
+        if (health <= 0)
+        {
+            die();
         }
     }
 
@@ -179,5 +208,19 @@ public class MaskMovement : MonoBehaviour
     float CalculateHealth()
     {
         return (health / maxHealth);
+    }
+
+    public void takeDamage(int damageNum)
+    {
+        health -= damageNum;
+        Debug.Log("Boss has " + health +" health left.");
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "ArrowPrefab(Clone)")
+        {
+            takeDamage(2);
+        }
     }
 }

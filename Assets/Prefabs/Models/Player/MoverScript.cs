@@ -322,4 +322,10 @@ public class MoverScript : MonoBehaviour
         Debug.Log("I feel better");
         heartCall.gainHealth();
     }
+    
+    // return weapon number
+    public int weaponNum()
+    {
+        return currentWeaponCounter;
+    }
 }
